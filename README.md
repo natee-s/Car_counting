@@ -35,35 +35,35 @@ Ensure you have a GPU environment (e.g., Google Colab with T4 GPU) and install t
 ```bash
 pip install ultralytics opencv-python-headless matplotlib
 
-2. Prepare Data
+### 2. Prepare Data
 Upload your test video into the working directory and rename it to test_video.mp4 (or update the video_path variable in the code).
 
-3. Determine Counting Zone (Optional but Recommended)
+### 3. Determine Counting Zone (Optional but Recommended)
 Run the coordinate calculation script first to find the optimal Y-axis for your specific camera angle.
 
 import cv2, matplotlib.pyplot as plt
 # Load frame, convert BGR to RGB, plot lines, and use plt.imshow() to find coordinates
 
-4. Run the Pipeline
+### 4. Run the Pipeline
 Execute the main script. The system will download yolov8s.pt automatically on the first run.
 # The script will process the video frame-by-frame.
 # Once finished, 'output_video.mp4' will be saved in your directory.
 
-🧠 Engineering Decisions & Challenges Solved
-1. The Motorcycle Detection Problem
+## 🧠 Engineering Decisions & Challenges Solved
+### 1. The Motorcycle Detection Problem
 Challenge: The baseline yolov8n (Nano) model failed to detect motorcycles, especially those blending into the road (dark clothes/helmets).
 Solution: Upgraded to yolov8s (Small) for deeper feature extraction. Forced input size imgsz=640 to retain high-frequency details. Lowered
 the confidence threshold to 0.10 to recapture small bounding boxes while using iou=0.5 to handle overlapping vehicles.
 
-2. Fast-Moving Object Misses (The "Jumping" Center Point)
+### 2. Fast-Moving Object Misses (The "Jumping" Center Point)
 Challenge: Using a single counting line (cy > line_y) caused missed counts if a vehicle moved too fast between frames, skipping the line entirely.
 Solution: Implemented a "Counting Zone" (Entry line at Y=400, Exit line at Y=600). The logic was updated to line1_y < cy < line2_y.
 
-3. Real-Time Performance & State
+### 3. Real-Time Performance & State
 TrackingChallenge: How to prevent the system from counting the same vehicle 30 times (for 30 frames) while it remains in the Counting Zone?
 Solution: Utilized a Python set() data structure to cache track_ids. Checking if track_id not in counted_ids provides a lightning-fast O(1) lookup time,
 preventing duplicate counts without slowing down the video FPS.
 
-👤 Author
+## 👤 Author
 Natee Siriudom 
 AI Engineer & Full-Stack Developer

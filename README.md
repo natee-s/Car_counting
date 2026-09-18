@@ -1,3 +1,4 @@
+<img width="1907" height="962" alt="Screenshot 2026-09-18 163958" src="https://github.com/user-attachments/assets/3adf4cb3-47f4-48b6-88b5-f9abd2b769a9" />
 A Computer Vision pipeline for real-time vehicle detection, tracking, and counting using **YOLOv8** and **ByteTrack** algorithm. This project demonstrates the ability to solve real-world traffic analysis problems by implementing a robust "Counting Zone" logic to handle high-speed moving objects.
 
 ## 🎯 Features
